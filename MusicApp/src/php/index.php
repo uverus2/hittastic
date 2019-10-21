@@ -14,41 +14,20 @@
 </head>
 <body>
 
-    <div class="container py-2">
-        <div class="row">
-            <div class="col-12 text-center" >
-                <h3>HitTastic look into our database below</h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-12 text-center">
-                <label for="">Search in Our Database</label>
-            </div>
-            <div class="col-12 text-center py-2">
-                <input type="text" id="search">
-            </div>
-            <div class="col-12 text-center py-2">
-                <button id="submit" type="submit">Submit</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12" id="results">
-            
-            </div>
-        </div>
-    </div>
-
+  
 
     <div class="container py-2">
         <div class="row">
             <div class="col-12 text-center" >
-                <h3>Using Ajax</h3>
+                <h3>HitTastic look into our database below to look at our quotes and Songs</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-2">
+        <div class="row">
+            <div class="col-12 text-center" >
+                <h3>Using Ajax - Find quotes</h3>
             </div>
         </div>
     </div>
@@ -74,6 +53,40 @@
             </div>
         </div>
     </div>
+
+
+    <div class="container py-2">
+            <div class="row">
+                <div class="col-12 text-center" >
+                    <h3>Using Fetch API - Find songs</h3>
+                </div>
+            </div>
+    </div>
+
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <label for="">Search in Our Database</label>
+            </div>
+            <div class="col-12 text-center py-2">
+                <input type="text" id="search">
+            </div>
+            <div class="col-12 text-center py-2">
+                <button id="submit" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="results">
+            
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 
