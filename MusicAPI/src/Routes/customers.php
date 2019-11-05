@@ -48,6 +48,27 @@ $app->get('/api/all', function(Request $request, Response $response) {
     
 });
 
+
+// Get all songs
+$app->get('/api/location/all', function(Request $request, Response $response) {
+    
+    $sql = "SELECT * FROM mapplay";
+    try {
+        // Get databse object
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $songs = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $response->withJson($songs);
+
+    }catch(PDOException $e) {
+        //echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
+    }
+    
+});
+
 // Get single song
 // $app->get('/api/song/{name}', function(Request $request, Response $response) {
 
@@ -166,6 +187,35 @@ $app->post('/api/song/add', function(Request $request, Response $response) {
     
 });
 
+// Add a Market
+$app->post('/api/location/add', function(Request $request, Response $response) {
+
+    
+    $lat = $request->getParam("lat");
+    $lng = $request->getParam("lng");
+    $PlaceType= $request->getParam("PlaceType");
+    $PlaceDesc = $request->getParam("PlaceDesc");
+
+    $sql = "INSERT INTO mapplay (lat, lng, PlaceType, PlaceDesc) VALUES ( :lat, :lng, :PlaceType, :PlaceDesc)";
+    try {
+        // Get databse object
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':lat',$lat);
+        $stmt->bindParam(':lng',$lng);
+        $stmt->bindParam(':PlaceType',$PlaceType);
+        $stmt->bindParam(':PlaceDesc',$PlaceDesc);
+        $stmt->execute();
+
+        $message = '{"notice": {"text":"Marker Added"}}';
+        return $response->withJson($message);
+
+    }catch(PDOException $e) {
+        return $response->getBody()->write($e->getMessage());
+    }
+});
+
 // update a single song
 $app->put('/api/song/update/{id}', function(Request $request, Response $response) {
 
@@ -212,6 +262,8 @@ $app->put('/api/song/update/{id}', function(Request $request, Response $response
     }
     
 });
+
+
 
 // update a single song
 $app->put('/api/song/updateLikes/{id}', function(Request $request, Response $response) {

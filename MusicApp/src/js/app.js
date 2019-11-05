@@ -16,8 +16,11 @@ const appendMultiple = (el, array) => {
 
 (function() {
 
-    const songAPIurl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/";
-    const songLikeUpdateUrl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/updateLikes/";
+    // const songAPIurl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/";
+    // const songLikeUpdateUrl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/updateLikes/";
+    const songAPIurl = "http://localhost/slimFramework/MusicAPI/public/index.php/api/song/";
+    const songLikeUpdateUrl = "http://localhost/slimFramework/MusicAPI/public/index.php/api/song/updateLikes/";
+
 
     const resultsArea = document.getElementById("results");
     const fatchSearch = () => {
@@ -146,9 +149,11 @@ const appendMultiple = (el, array) => {
 
 })();
 
+// Mapping 
 (() => {
     // Song API
-    const artistLocationApi = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/location/";
+    //const artistLocationApi = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/location/";
+    const artistLocationApi = "http://localhost/slimFramework/MusicAPI/public/index.php/api/song/location/";
 
     const createMap = (mapi, latLoc, lngLoc) => {
 
