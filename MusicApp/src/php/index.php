@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css">  
 </head>
 <body>
 
@@ -86,11 +87,38 @@
     </div>
 
 
+    <div class="container py-2">
+            <div class="row">
+                <div class="col-12 text-center" >
+                    <h3>Using Fetch API - Find Artist Location</h3>
+                </div>
+            </div>
+    </div>
+
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <label for="">Search in Our Database</label>
+            </div>
+            <div class="col-12 text-center py-2">
+                <input type="text" id="searchLocation">
+            </div>
+            <div class="col-12 text-center py-2">
+                <button id="submitLocation" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="locationResults">
+            
+            </div>
+        </div>
+    </div>
 
 
-
-
-
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"> </script>
     <script src="../js/app.js"></script>
 </body>
 </html>

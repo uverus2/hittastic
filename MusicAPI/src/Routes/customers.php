@@ -2,7 +2,7 @@
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-$app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
+//$app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 
 // Get all songs
@@ -18,11 +18,11 @@ $app->get('/api/songs/{limit}', function(Request $request, Response $response) {
         $stmt = $db->query($sql);
         $songs = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        header('Content-Type: application/json');
-        echo json_encode($songs);
+       
+        return $response->withJson($songs);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
@@ -39,11 +39,11 @@ $app->get('/api/all', function(Request $request, Response $response) {
         $stmt = $db->query($sql);
         $songs = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        header('Content-Type: application/json');
-        echo json_encode($songs);
+        return $response->withJson($songs);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        //echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
@@ -86,14 +86,38 @@ $app->get('/api/song/{name}', function(Request $request, Response $response) {
         $stmt->execute();
         $song = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        header('Content-Type: application/json');
-        echo json_encode($song);
+        return $response->withJson($song);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
+
+
+// Get single song
+$app->get('/api/song/location/{name}', function(Request $request, Response $response) {
+
+    $name = $request->getAttribute("name");
+    
+    $sql = "SELECT * FROM artistlocation WHERE name = :names";
+    try {
+        // Get databse object
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':names', $name);
+        $stmt->execute();
+        $song = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $response->withJson($song);
+
+    }catch(PDOException $e) {
+        return $response->getBody()->write($e->getMessage());
+    }
+    
+});
+
 
 
 
@@ -133,11 +157,11 @@ $app->post('/api/song/add', function(Request $request, Response $response) {
         $stmt->bindParam(':quantity',$quantity);
         $stmt->execute();
 
-        header('Content-Type: application/json');
-        echo '{"notice": {"text":"Customer Added"}}';
+        $message = '{"notice": {"text":"Customer Added"}}';
+        return $response->withJson($message);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
@@ -180,11 +204,11 @@ $app->put('/api/song/update/{id}', function(Request $request, Response $response
         $stmt->bindParam(':quantity',$quantity);
         $stmt->execute();
 
-        header('Content-Type: application/json');
-        echo '{"notice": {"text":"Customer Updated"}}';
+        $message = '{"notice": {"text":"Customer Updated"}}';
+        return $response->withJson($message);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
@@ -207,11 +231,11 @@ $app->put('/api/song/updateLikes/{id}', function(Request $request, Response $res
         $stmt->bindParam(':id',$id);
         $stmt->execute();
 
-        header('Content-Type: application/json');
-        echo '{"notice": {"text":"Likes Updated"}}';
+        $message = '{"notice": {"text":"Likes Updated"}}';
+        return $response->withJson($message);
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
@@ -231,15 +255,14 @@ $app->delete('/api/song/delete/{id}', function(Request $request, Response $respo
         $stmt->bindParam(':id',$id);
         $stmt->execute();
 
-        header('Content-Type: application/json');
-        echo '{"notice": {"text":"Customer Deleted"}}';
+        $message = '{"notice": {"text":"Customer Deleted"}}';
+        return $response->withJson($message);
+        
 
     }catch(PDOException $e) {
-        echo '{"error":{"text": ' .$e->getMessage(). '}}';
+        return $response->getBody()->write($e->getMessage());
     }
     
 });
 
-
-
-
+?>

@@ -16,8 +16,8 @@ const appendMultiple = (el, array) => {
 
 (function() {
 
-    const songAPIurl = "http://localhost/slimFramework/MusicAPI/public/index.php/api/song/";
-    const songLikeUpdateUrl = "http://localhost/slimFramework/MusicAPI/public/index.php/api/song/updateLikes/";
+    const songAPIurl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/";
+    const songLikeUpdateUrl = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/updateLikes/";
 
     const resultsArea = document.getElementById("results");
     const fatchSearch = () => {
@@ -144,4 +144,39 @@ const appendMultiple = (el, array) => {
 
     document.getElementById("submitAjax").addEventListener("click", ajaxSearch);
 
+})();
+
+(() => {
+    // Song API
+    const artistLocationApi = "http://localhost/hittastic/MusicAPI/public/index.php/api/song/location/";
+
+    const createMap = (mapi, latLoc, lngLoc) => {
+
+        const map = L.map(mapi);
+        const attrib = "Map data copyright OpenStreetMap contributors, Open Database Licence";
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: attrib }).addTo(map);
+        map.setView([latLoc, lngLoc], 16);
+        document.getElementById(mapi).style.height = "500px";
+
+        const marker = L.marker([latLoc, lngLoc]).addTo(map);
+        const currentLocation = L.circle([latLoc, lngLoc], { radius: 100 }).addTo(map);
+        currentLocation.bindPopup("Your Locations");
+
+        currentLocation.on("click", e => {
+            alert(`Marker Placed at your Location which is Latitude ${e.latlng.lat} and Longitude ${e.latlng.lng}`);
+        });
+
+    }
+
+    document.getElementById("submitLocation").addEventListener("click", () => {
+        const search = document.getElementById("searchLocation").value;
+        fetch(artistLocationApi + search)
+            .then(response => response.json())
+            .then(response => {
+                let lat = response[0].lat;
+                let lon = response[0].lon;
+                createMap("locationResults", Number(lat), Number(lon))
+            }).catch(e => console.log(e));
+
+    })
 })();
